@@ -1,1 +1,1023 @@
 
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dear You ♡ Món Quà Dành Riêng Cho Bạn</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Quicksand:wght@400;500;600;700&display=swap');
+
+:root {
+  --pink: #f6b4c9;
+  --deep: #bd4e78;
+  --text: #71374f;
+  --bg: #fff7fa;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Quicksand', sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+
+button, input, textarea, select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 7%;
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 2px 15px #e9cbd544;
+}
+
+.logo {
+  font: italic bold 28px 'Playfair Display', serif;
+  color: var(--deep);
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--text);
+  font-size: 13px;
+  margin-left: 18px;
+}
+
+.hero {
+  min-height: 570px;
+  padding: 65px 8%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 30px;
+  background: radial-gradient(circle at 80% 40%, #ffdbe6, #fff2f6 65%, white);
+  overflow: hidden;
+}
+
+.eyebrow {
+  color: #bd7190;
+  letter-spacing: 3px;
+  font-size: 12px;
+  margin-bottom: 20px;
+}
+
+h1, h2, h3 {
+  font-family: 'Playfair Display', serif;
+}
+
+h1 {
+  font-size: clamp(38px, 5vw, 65px);
+  line-height: 1.2;
+  color: #75344f;
+}
+
+h1 em {
+  color: var(--deep);
+}
+
+.hero p {
+  line-height: 1.9;
+  margin: 20px 0;
+  font-size: 14px;
+  color: #986a7e;
+}
+
+.btn {
+  border: 0;
+  background: linear-gradient(135deg, #e987aa, #b94370);
+  color: white;
+  padding: 13px 22px;
+  border-radius: 30px;
+  font-weight: 700;
+  box-shadow: 0 7px 18px #d68ba755;
+  transition: .25s;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+}
+
+.btn-light {
+  background: white;
+  color: var(--deep);
+  border: 1px solid #edb6ca;
+  box-shadow: none;
+  margin-left: 8px;
+}
+
+.bouquet {
+  text-align: center;
+  font-size: 150px;
+  filter: drop-shadow(0 15px 20px #db94b855);
+  animation: float 3s ease-in-out infinite;
+}
+
+.bouquet small {
+  display: block;
+  font-size: 17px;
+  font-family: 'Playfair Display', serif;
+  color: #a34c70;
+  margin-top: 10px;
+}
+
+section {
+  padding: 65px 7%;
+}
+
+.heading {
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 12px;
+}
+
+.description {
+  text-align: center;
+  color: #a37a8d;
+  font-size: 14px;
+  line-height: 1.8;
+  margin-bottom: 30px;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+
+.filters button {
+  border: 1px solid #efccda;
+  background: white;
+  color: var(--deep);
+  padding: 10px 20px;
+  border-radius: 25px;
+}
+
+.filters button.active {
+  background: var(--deep);
+  color: white;
+}
+
+.search {
+  display: block;
+  width: min(100%, 420px);
+  padding: 13px 18px;
+  border: 1px solid #efd3df;
+  border-radius: 30px;
+  margin: 0 auto 25px;
+  outline-color: var(--pink);
+}
+
+.templates {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.card {
+  border: 1px solid #f0dfe6;
+  border-radius: 16px;
+  overflow: hidden;
+  background: white;
+  transition: .25s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px #e7b5c644;
+}
+
+.card-art {
+  height: 175px;
+  display: grid;
+  place-items: center;
+  font-size: 70px;
+  background: linear-gradient(140deg, #ffe6ed, #fff6e9);
+}
+
+.card:nth-child(2) .card-art {
+  background: linear-gradient(140deg, #f8d8e5, #fff1f2);
+}
+
+.card:nth-child(3) .card-art {
+  background: linear-gradient(140deg, #f7d4f5, #e9e4ff);
+}
+
+.card:nth-child(4) .card-art {
+  background: linear-gradient(140deg, #ffe3d3, #fff2dc);
+}
+
+.card-body {
+  padding: 17px;
+}
+
+.card h3 {
+  font-size: 19px;
+  margin-bottom: 10px;
+}
+
+.card p {
+  font-size: 12px;
+  line-height: 1.8;
+  color: #a17b8b;
+  min-height: 44px;
+  margin-bottom: 15px;
+}
+
+.card .btn {
+  padding: 9px 15px;
+  font-size: 12px;
+  box-shadow: none;
+}
+
+.editor {
+  background: linear-gradient(140deg, #fff0f5, #fff9f4);
+}
+
+.editor-box {
+  max-width: 750px;
+  margin: auto;
+  padding: 30px;
+  background: white;
+  border: 1px solid #f1d9e3;
+  border-radius: 20px;
+  box-shadow: 0 15px 45px #e6bdce33;
+}
+
+.field {
+  margin-bottom: 17px;
+}
+
+.field label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.field input, .field textarea, .field select {
+  width: 100%;
+  border: 1px solid #eacdda;
+  border-radius: 10px;
+  padding: 13px;
+  background: #fffafb;
+  color: var(--text);
+  outline-color: var(--pink);
+}
+
+.field textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.preview {
+  margin-top: 25px;
+  padding: 30px 22px;
+  border-radius: 18px;
+  background: #fff1f5;
+  text-align: center;
+  border: 1px dashed #e6a8bf;
+}
+
+.preview .big-flower {
+  font-size: 65px;
+  margin-bottom: 12px;
+}
+
+.preview h3 {
+  font-size: 28px;
+  color: var(--deep);
+  margin-bottom: 15px;
+}
+
+.preview p {
+  white-space: pre-wrap;
+  line-height: 1.9;
+  font-size: 14px;
+}
+
+.preview img {
+  max-width: 100%;
+  max-height: 240px;
+  object-fit: contain;
+  border-radius: 12px;
+  margin: 10px;
+}
+
+.photo-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  text-align: center;
+}
+
+.step {
+  background: white;
+  padding: 25px 15px;
+  border: 1px solid #f3dbe5;
+  border-radius: 15px;
+}
+
+.step span {
+  font-size: 32px;
+}
+
+.step h3 {
+  margin: 12px 0;
+}
+
+.step p {
+  font-size: 13px;
+  color: #a17b8b;
+  line-height: 1.8;
+}
+
+footer {
+  text-align: center;
+  padding: 35px 15px;
+  background: #f9e5ed;
+  color: #9b6b81;
+  font-size: 13px;
+  line-height: 2;
+}
+
+.heart {
+  position: fixed;
+  top: -30px;
+  pointer-events: none;
+  z-index: 99;
+  animation: fall 4s linear forwards;
+}
+
+#notice {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #813b5a;
+  color: white;
+  border-radius: 30px;
+  padding: 13px 20px;
+  z-index: 100;
+  max-width: 90%;
+  text-align: center;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-15px) rotate(3deg); }
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@media(max-width: 850px) {
+  .hero {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .bouquet { font-size: 120px; }
+
+  .templates {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  nav { padding: 15px 5%; }
+  nav a { margin-left: 8px; font-size: 11px; }
+}
+
+@media(max-width: 480px) {
+  .logo { font-size: 22px; }
+  nav a { display: none; }
+  .templates { grid-template-columns: 1fr; }
+  .card-art { height: 190px; }
+  .steps { grid-template-columns: 1fr; }
+  .editor-box { padding: 18px; }
+  section { padding: 45px 5%; }
+  .btn-light { margin: 10px 0 0; }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <div class="logo">♡ Dear You</div>
+  <div>
+    <a href="#templates">Khám phá mẫu</a>
+    <a href="#steps">Cách tạo quà</a>
+    <a href="#editor">Tạo quà</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div>
+    <div class="eyebrow">QUÀ TẶNG CÁ NHÂN HÓA DẠNG SỐ</div>
+    <h1>Món quà nhỏ,<br><em>gửi trọn yêu thương ♡</em></h1>
+    <p>
+      Tạo món quà kỹ thuật số độc đáo với hình ảnh,
+      lời nhắn, nhạc nền và những kỷ niệm đáng nhớ.
+      Một món quà nhỏ nhưng chứa thật nhiều yêu thương.
+    </p>
+    <button class="btn" onclick="goEditor()">
+      🎁 Tạo món quà miễn phí
+    </button>
+    <button class="btn btn-light" onclick="sendHearts()">
+      ♡ Gửi trái tim
+    </button>
+  </div>
+
+  <div class="bouquet">
+    💐
+    <small>A little gift from my heart</small>
+  </div>
+</header>
+
+<section id="templates">
+  <h2 class="heading">Chọn một món quà đặc biệt</h2>
+  <p class="description">
+    Chọn mẫu bạn thích rồi cá nhân hóa theo câu chuyện của mình.
+  </p>
+
+  <input class="search" id="search"
+    placeholder="🔍 Tìm kiếm mẫu quà..."
+    oninput="filterCards()">
+
+  <div class="filters">
+    <button class="active" onclick="setCategory('all',this)">Tất cả</button>
+    <button onclick="setCategory('love',this)">Tình yêu</button>
+    <button onclick="setCategory('birthday',this)">Sinh nhật</button>
+    <button onclick="setCategory('flower',this)">Bó hoa</button>
+    <button onclick="setCategory('memory',this)">Kỷ niệm</button>
+  </div>
+
+  <div class="templates" id="templateGrid">
+
+    <article class="card" data-category="love" data-name="thiên hà tình yêu">
+      <div class="card-art">🌌💗</div>
+      <div class="card-body">
+        <h3>Thiên hà tình yêu</h3>
+        <p>Một vũ trụ nhỏ dành riêng cho người đặc biệt.</p>
+        <button class="btn" onclick="chooseTemplate('Thiên hà tình yêu','🌌')">
+          Xem mẫu →
+        </button>
+      </div>
+    </article>
+
+    <article class="card" data-category="love" data-name="thư tình">
+      <div class="card-art">💌🌹</div>
+      <div class="card-body">
+        <h3>Thư tình</h3>
+        <p>Gửi những lời chân thành mà bạn chưa nói.</p>
+        <button class="btn" onclick="chooseTemplate('Thư tình','💌')">
+          Xem mẫu →
+        </button>
+      </div>
+    </article>
+
+    <article class="card" data-category="memory" data-name="kỷ niệm chúng mình">
+      <div class="card-art">📸💕</div>
+      <div class="card-body">
+        <h3>Kỷ niệm chúng mình</h3>
+        <p>Gom những khoảnh khắc đẹp thành một món quà.</p>
+        <button class="btn" onclick="chooseTemplate('Kỷ niệm chúng mình','📸')">
+          Xem mẫu →
+        </button>
+      </div>
+    </article>
+
+    <article class="card" data-category="flower" data-name="bó hoa dành riêng">
+      <div class="card-art">💐🌸</div>
+      <div class="card-body">
+        <h3>Bó hoa dành riêng</h3>
+        <p>Một bó hoa dịu dàng cùng lời nhắn yêu thương.</p>
+        <button class="btn" onclick="chooseTemplate('Bó hoa dành riêng','💐')">
+          Xem mẫu →
+        </button>
+      </div>
+    </article>
+
+    <article class="card" data-category="birthday" data-name="sinh nhật ngọt ngào">
+      <div class="card-art">🎂🎀</div>
+      <div class="card-body">
+        <h3>Sinh nhật ngọt ngào</h3>
+        <p>Chúc người ấy một tuổi mới thật nhiều niềm vui.</p>
+        <button class="btn" onclick="chooseTemplate('Sinh nhật ngọt ngào','🎂')">
+          Xem mẫu →
+        </button>
+      </div>
+    </article>
+
+    <article class="card" data-category="memory" data-name="album kỷ niệm">
+      <div class="card-art">🖼️💗</div>
+      <div class="card-body">
+        <h3>Album kỷ niệm</h3>
+        <p>Những tấm ảnh nhỏ kể lại câu chuyện của bạn.</p>
+        <button class="btn" onclick="chooseTemplate('Album kỷ niệm','🖼️')">
+          Xem mẫu →
+        </button>
+      </div>
+    </article>
+
+    <article class="card" data-category="flower" data-name="vườn hoa">
+      <div class="card-art">🌷🌿</div>
+      <div class="card-body">
+        <h3>Vườn hoa</h3>
+        <p>Gửi một khu vườn xinh xắn thay ngàn lời nói.</p>
+        <button class="btn" onclick="chooseTemplate('Vườn hoa','🌷')">
+          Xem mẫu →
+        </button>
+      </div>
+    </article>
+
+    <article class="card" data-category="love" data-name="lời yêu thương">
+      <div class="card-art">💗✨</div>
+      <div class="card-body">
+        <h3>Lời yêu thương</h3>
+        <p>Một trang nhỏ lưu giữ lời nhắn của riêng bạn.</p>
+        <button class="btn" onclick="chooseTemplate('Lời yêu thương','💗')">
+          Xem mẫu →
+        </button>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section id="steps">
+  <h2 class="heading">Tạo quà thật dễ dàng</h2>
+  <p class="description">Ba bước để tạo một món quà mang dấu ấn riêng.</p>
+
+  <div class="steps">
+    <div class="step">
+      <span>🎁</span>
+      <h3>01. Chọn mẫu</h3>
+      <p>Chọn kiểu quà phù hợp với dịp đặc biệt của bạn.</p>
+    </div>
+    <div class="step">
+      <span>🖋️</span>
+      <h3>02. Cá nhân hóa</h3>
+      <p>Thêm tên, lời nhắn, hình ảnh và nhạc nền.</p>
+    </div>
+    <div class="step">
+      <span>💌</span>
+      <h3>03. Lưu và chia sẻ</h3>
+      <p>Xuất trang quà thành file HTML để gửi cho người ấy.</p>
+    </div>
+  </div>
+</section>
+
+<section class="editor" id="editor">
+  <h2 class="heading">Tạo món quà của bạn ♡</h2>
+  <p class="description">Mỗi chi tiết đều có thể mang câu chuyện của riêng bạn.</p>
+
+  <div class="editor-box">
+    <div class="field">
+      <label>Chọn kiểu quà</label>
+      <select id="style" onchange="updatePreview()">
+        <option value="💐">Bó hoa</option>
+        <option value="💌">Thư tình</option>
+        <option value="🎂">Sinh nhật</option>
+        <option value="🌌">Thiên hà tình yêu</option>
+        <option value="📸">Album kỷ niệm</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Tên người nhận</label>
+      <input id="receiver" placeholder="Ví dụ: Bé yêu của anh"
+        oninput="updatePreview()">
+    </div>
+
+    <div class="field">
+      <label>Lời giới thiệu</label>
+      <input id="intro" placeholder="Ví dụ: Gửi em, người anh thương nhất..."
+        oninput="updatePreview()">
+    </div>
+
+    <div class="field">
+      <label>Lời nhắn / nội dung thư</label>
+      <textarea id="message"
+        placeholder="Viết những điều bạn muốn gửi đến người ấy..."
+        oninput="updatePreview()"></textarea>
+    </div>
+
+    <div class="field">
+      <label>Chữ ký</label>
+      <input id="signature" placeholder="Ví dụ: Người thương của em ♡"
+        oninput="updatePreview()">
+    </div>
+
+    <div class="field">
+      <label>Chọn ảnh kỷ niệm</label>
+      <input type="file" id="photos" accept="image/*" multiple>
+    </div>
+
+    <div class="field">
+      <label>Chọn nhạc nền (MP3, WAV...)</label>
+      <input type="file" id="music" accept="audio/*">
+    </div>
+
+    <div class="field">
+      <label>Màu nền</label>
+      <input type="color" id="bgColor" value="#fff0f5"
+        oninput="updatePreview()">
+    </div>
+
+    <div class="field">
+      <label>Mật khẩu mở quà (không bắt buộc)</label>
+      <input id="password" type="password"
+        placeholder="Để trống nếu không cần mật khẩu">
+    </div>
+
+    <button class="btn" onclick="showPreview()">👀 Xem trước món quà</button>
+    <button class="btn btn-light" onclick="saveGift()">⬇ Xuất website HTML</button>
+
+    <div class="preview" id="preview">
+      <div class="big-flower" id="previewIcon">💐</div>
+      <h3 id="previewTitle">Gửi em yêu ♡</h3>
+      <p id="previewIntro">Một món quà nhỏ dành cho người đặc biệt.</p>
+      <div class="photo-grid" id="previewPhotos"></div>
+      <p id="previewMessage" style="margin-top:20px"></p>
+      <p id="previewSignature" style="margin-top:20px;font-style:italic">
+        Thương em thật nhiều ♡
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <h2 style="font-style:italic;color:#bd4e78">♡ Dear You</h2>
+  <p>Một món quà nhỏ, một tình cảm chân thành.</p>
+  <p>Được tạo bằng yêu thương.</p>
+</footer>
+
+<div id="notice"></div>
+
+<audio id="audioPlayer" loop></audio>
+
+<script>
+let selectedCategory = "all";
+let currentTemplate = {
+  name: "Bó hoa dành riêng",
+  icon: "💐"
+};
+
+const $ = id => document.getElementById(id);
+
+function notify(message) {
+  const box = $("notice");
+  box.textContent = message;
+  box.style.display = "block";
+
+  clearTimeout(window.noticeTimer);
+  window.noticeTimer = setTimeout(() => {
+    box.style.display = "none";
+  }, 3000);
+}
+
+function goEditor() {
+  $("editor").scrollIntoView({ behavior: "smooth" });
+}
+
+function setCategory(category, button) {
+  selectedCategory = category;
+
+  document.querySelectorAll(".filters button").forEach(btn => {
+    btn.classList.remove("active");
+  });
+
+  button.classList.add("active");
+  filterCards();
+}
+
+function filterCards() {
+  const keyword = $("search").value.toLowerCase().trim();
+
+  document.querySelectorAll(".card").forEach(card => {
+    const name = card.dataset.name || "";
+    const category = card.dataset.category;
+
+    const matchesCategory =
+      selectedCategory === "all" || category === selectedCategory;
+
+    const matchesSearch = name.includes(keyword);
+
+    card.style.display =
+      matchesCategory && matchesSearch ? "" : "none";
+  });
+}
+
+function chooseTemplate(name, icon) {
+  currentTemplate = { name, icon };
+  $("style").value = icon;
+  updatePreview();
+  goEditor();
+  notify("Đã chọn mẫu: " + name + " ♡");
+}
+
+function updatePreview() {
+  const receiver = $("receiver").value.trim();
+  const intro = $("intro").value.trim();
+  const message = $("message").value.trim();
+  const signature = $("signature").value.trim();
+
+  $("previewIcon").textContent = $("style").value;
+  $("previewTitle").textContent =
+    receiver ? "Gửi " + receiver + " ♡" : "Gửi em yêu ♡";
+
+  $("previewIntro").textContent =
+    intro || "Một món quà nhỏ dành cho người đặc biệt.";
+
+  $("previewMessage").textContent = message;
+  $("previewSignature").textContent =
+    signature || "Thương em thật nhiều ♡";
+
+  $("preview").style.background = $("bgColor").value;
+}
+
+function showPreview() {
+  updatePreview();
+
+  $("preview").scrollIntoView({ behavior: "smooth", block: "center" });
+
+  sendHearts();
+}
+
+function sendHearts() {
+  const symbols = ["💗", "💕", "♡", "🌸", "✨"];
+
+  for (let i = 0; i < 22; i++) {
+    setTimeout(() => {
+      const el = document.createElement("span");
+      el.className = "heart";
+      el.textContent =
+        symbols[Math.floor(Math.random() * symbols.length)];
+
+      el.style.left = Math.random() * 100 + "vw";
+      el.style.fontSize = (16 + Math.random() * 20) + "px";
+
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 4200);
+    }, i * 100);
+  }
+}
+
+$("photos").addEventListener("change", function() {
+  const files = Array.from(this.files || []);
+
+  $("previewPhotos").replaceChildren();
+
+  files.forEach(file => {
+    if (!file.type.startsWith("image/")) return;
+
+    const reader = new FileReader();
+
+    reader.onload = event => {
+      const img = document.createElement("img");
+      img.src = event.target.result;
+      img.alt = "Ảnh kỷ niệm";
+      $("previewPhotos").appendChild(img);
+    };
+
+    reader.readAsDataURL(file);
+  });
+
+  notify("Đã chọn ảnh. Bạn có thể xem trước bên dưới.");
+});
+
+$("music").addEventListener("change", function() {
+  const file = this.files[0];
+  if (!file) return;
+
+  const player = $("audioPlayer");
+
+  if (player.dataset.objectUrl) {
+    URL.revokeObjectURL(player.dataset.objectUrl);
+  }
+
+  const url = URL.createObjectURL(file);
+  player.src = url;
+  player.dataset.objectUrl = url;
+
+  player.play()
+    .then(() => notify("Nhạc đang phát 🎵"))
+    .catch(() => notify("Nhấn phát nhạc trong trình phát nếu cần."));
+
+  if (!$("musicControls")) {
+    const controls = document.createElement("div");
+    controls.id = "musicControls";
+    controls.style.marginTop = "15px";
+    controls.innerHTML = '<button class="btn btn-light" onclick="toggleMusic()">⏯ Phát / tạm dừng nhạc</button>';
+    $("music").parentElement.appendChild(controls);
+  }
+});
+
+function toggleMusic() {
+  const player = $("audioPlayer");
+
+  if (player.paused) {
+    player.play().catch(() => notify("Không thể phát nhạc."));
+  } else {
+    player.pause();
+  }
+}
+
+async function buildGiftHTML() {
+  const photoFiles = Array.from($("photos").files || []);
+  const musicFile = $("music").files[0];
+  const password = $("password").value;
+
+  const photos = await Promise.all(
+    photoFiles.map(file => new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    }))
+  );
+
+  let musicData = "";
+
+  if (musicFile) {
+    musicData = await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(musicFile);
+    });
+  }
+
+  const data = {
+    title: $("receiver").value.trim() || "Em yêu",
+    intro: $("intro").value.trim() ||
+      "Một món quà nhỏ dành cho người đặc biệt.",
+    message: $("message").value.trim(),
+    signature: $("signature").value.trim() || "Thương em thật nhiều ♡",
+    icon: $("style").value,
+    color: $("bgColor").value,
+    photos,
+    musicData,
+    password
+  };
+
+  return `<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Món quà dành cho bạn ♡</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;padding:25px 15px;
+display:grid;place-items:center;background:${data.color};
+font-family:Georgia,serif;color:#793b56}
+.card{max-width:650px;width:100%;background:#ffffffed;
+padding:30px 22px;border-radius:22px;text-align:center;
+box-shadow:0 12px 40px #ad658333}
+.icon{font-size:70px}
+h1{color:#bd4e78}
+p{white-space:pre-wrap;line-height:1.9}
+img{max-width:100%;max-height:300px;object-fit:contain;
+border-radius:12px;margin:8px}
+button,input{font:inherit;padding:12px;border-radius:12px}
+button{border:0;background:#bd4e78;color:white;cursor:pointer}
+#photos{display:flex;flex-wrap:wrap;justify-content:center}
+#letter{display:none}
+</style>
+</head>
+<body>
+<div class="card" id="gate">
+<div class="icon">💌</div>
+<h1>Một món quà dành cho bạn</h1>
+<p>Người gửi có một điều muốn nhắn với bạn ♡</p>
+${data.password ? '<input id="pass" type="password" placeholder="Nhập mật khẩu"><br><br>' : ''}
+<button onclick="openGift()">Mở món quà ♡</button>
+<p id="error"></p>
+</div>
+<div class="card" id="letter" style="display:none">
+<div class="icon">${data.icon}</div>
+<h1>Gửi ${escapeHTML(data.title)} ♡</h1>
+<p>${escapeHTML(data.intro)}</p>
+<div id="photos"></div>
+<p>${escapeHTML(data.message)}</p>
+<p><i>${escapeHTML(data.signature)}</i></p>
+${data.musicData ? '<audio id="music" controls loop style="width:100%"></audio>' : ''}
+<button onclick="hearts()">💗 Gửi trái tim</button>
+</div>
+<script>
+const gift=${JSON.stringify(data)};
+function openGift(){
+${data.password ? `if(document.getElementById('pass').value!==gift.password){
+document.getElementById('error').textContent='Mật khẩu chưa đúng.';
+return;
+}` : ''}
+document.getElementById('gate').style.display='none';
+document.getElementById('letter').style.display='block';
+gift.photos.forEach(src=>{
+const img=document.createElement('img');img.src=src;
+document.getElementById('photos').appendChild(img);
+});
+if(gift.musicData){
+const audio=document.getElementById('music');
+audio.src=gift.musicData;
+audio.play().catch(()=>{});
+}
+}
+function hearts(){
+for(let i=0;i<20;i++){
+const el=document.createElement('span');
+el.textContent='💗';
+el.style.cssText='position:fixed;top:-20px;left:'+Math.random()*100+
+'vw;font-size:24px;animation:fall 4s linear forwards;pointer-events:none';
+document.body.appendChild(el);setTimeout(()=>el.remove(),4100);
+}
+}
+function escapeHTML(s){
+return String(s).replace(/[&<>"']/g,c=>({
+'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+}[c]));
+}
+<\/script>
+<style>
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg);opacity:0}}
+</style>
+</body>
+</html>`;
+}
+
+function escapeHTML(s) {
+  return String(s).replace(/[&<>"']/g, c => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[c]);
+}
+
+async function saveGift() {
+  try {
+    notify("Đang chuẩn bị file quà tặng...");
+
+    const html = await buildGiftHTML();
+    const blob = new Blob([html], {
+      type: "text/html;charset=utf-8"
+    });
+
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+
+    a.href = url;
+    a.download = "mon-qua-danh-cho-ban.html";
+
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+    notify("Đã xuất file HTML thành công! 💗");
+  } catch (error) {
+    console.error(error);
+    notify("Có lỗi khi xuất file. Hãy thử lại.");
+  }
+}
+
+updatePreview();
+</script>
+
+</body>
+</html>
+

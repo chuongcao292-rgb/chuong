@@ -1,0 +1,487 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dear You 💗</title>
+<style>
+*{box-sizing:border-box}
+:root{--pink:#f06a9e;--light:#ffd8e7;--bg:#08060b}
+body{margin:0;background:var(--bg);color:white;font-family:Arial,sans-serif;overflow-x:hidden}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+#stars{position:fixed;inset:0;width:100%;height:100%;pointer-events:none}
+.screen{display:none;position:relative;z-index:1;min-height:100vh;padding:25px 14px 100px;text-align:center;align-items:center;flex-direction:column}
+.screen.active{display:flex}
+.eyebrow{font-size:11px;letter-spacing:4px;color:#ffb9d6;margin-top:10px}
+h1{font-family:Georgia,serif;color:#ffc9df;text-shadow:0 0 18px #fa77b777}
+.title{font-size:clamp(30px,8vw,43px);margin:14px 0}
+.sub{font-size:14px;line-height:1.7;color:#e9cad8}
+.btn{border:1px solid #f5c5d9;background:#fff;color:#402536;border-radius:14px;padding:12px 16px;font-weight:bold}
+.btn.primary{background:#ed6398;border-color:#ed6398;color:white}
+.btn.dark{background:#1a111b;color:#ffd9e8;border-color:#75455c}
+.actions{position:fixed;z-index:30;bottom:0;left:0;right:0;background:#130e10ed;backdrop-filter:blur(10px);display:flex;justify-content:center;gap:10px;padding:12px 8px calc(12px + env(safe-area-inset-bottom))}
+.gift{position:relative;width:min(100%,430px);aspect-ratio:2/3;margin:4px auto;animation:float 4s ease-in-out infinite}
+.bouquet-art{position:absolute;inset:0;width:100%;height:100%;z-index:1;overflow:visible}
+.photo-slots{position:absolute;inset:0;z-index:3}
+.photo-slot{position:absolute;background:#fff3df;border:3px solid #fff3e6;padding:0;box-shadow:0 4px 12px #0008;overflow:hidden}
+.photo-slot img{width:100%;height:100%;object-fit:cover;display:block}
+.photo-slot .empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#bd7d99;font-size:22px}
+.photo-slot input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}
+.photo-slot:nth-child(1){left:14%;top:19%;width:22%;height:13%;transform:rotate(-8deg)}
+.photo-slot:nth-child(2){left:37%;top:15%;width:25%;height:14%}
+.photo-slot:nth-child(3){left:65%;top:19%;width:21%;height:13%;transform:rotate(8deg)}
+.photo-slot:nth-child(4){left:14%;top:31%;width:22%;height:14%;transform:rotate(-7deg)}
+.photo-slot:nth-child(5){left:39%;top:31%;width:22%;height:14%}
+.photo-slot:nth-child(6){left:64%;top:31%;width:22%;height:14%;transform:rotate(7deg)}
+.hint{color:#f0b9d1;font-size:13px;line-height:1.7}
+.upload-tools{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:10px 0 20px}
+@keyframes float{50%{transform:translateY(-6px)}}
+.panel{width:min(100%,500px);text-align:left;padding:20px;border:1px solid #ffffff25;background:#ffffff09;border-radius:18px}
+.panel label{display:block;margin:14px 0 6px;color:#ffc9df}
+.panel input,.panel textarea{width:100%;background:#160e18;border:1px solid #70445d;border-radius:10px;padding:12px;color:white}
+.panel textarea{min-height:120px;line-height:1.7}
+.panel button{margin-top:12px}
+#cardScreen{padding:0;height:100svh;min-height:600px;overflow:hidden}
+#cardScreen.active{display:block}
+#world{position:absolute;inset:0;overflow:hidden}
+.floating-text{position:absolute;color:#ff83c9;text-shadow:0 0 12px #ff38b7;font-size:14px;white-space:pre-line;animation:drift 6s ease-in-out infinite alternate}
+.heart{position:absolute;color:#ff382d;font-size:25px;text-shadow:0 0 15px red;animation:heart 3s infinite}
+.photo-main{position:absolute;left:50%;top:46%;width:min(58vw,260px);height:min(40vh,340px);object-fit:cover;border:3px solid #ffe5ef;border-radius:9px;box-shadow:0 0 30px #ff91cb77;animation:tilt 5s ease-in-out infinite alternate}
+.photo-mini{position:absolute;width:70px;height:95px;object-fit:cover;border:2px solid #fff0f5;border-radius:5px;animation:drift 5s infinite alternate}
+@keyframes drift{to{translate:15px -20px;rotate:-5deg}}
+@keyframes heart{50%{translate:0 -18px;scale:1.2}}
+@keyframes tilt{from{transform:translate(-50%,-50%) rotateY(-12deg)}to{transform:translate(-50%,-52%) rotateY(12deg)}}
+.caption{position:absolute;bottom:105px;left:10px;right:10px;color:#ffc3de;text-shadow:0 0 10px #ff4eb5}
+.corner{position:absolute;top:14px;z-index:10}
+.corner.left{left:10px}.corner.right{right:10px}
+.envelope{position:relative;width:min(340px,88vw);height:235px;margin:45px auto 25px;perspective:1000px;cursor:pointer}
+.env-back{position:absolute;inset:0;background:#d98eb4;border-radius:8px}
+.letter-paper{position:absolute;left:5%;top:5%;width:90%;height:90%;background:#fff4e9;color:#75445d;overflow:hidden;border-radius:4px;z-index:2;transition:transform .8s,height .8s}
+.letter-content{padding:14px;text-align:left}
+.letter-content h2{text-align:center;color:#c35c91}
+.letter-content p{font-size:13px;line-height:1.8;white-space:pre-line}
+.env-front{position:absolute;inset:0;z-index:4;background:#efb5cf;clip-path:polygon(0 0,50% 60%,100% 0,100% 100%,0 100%)}
+.env-flap{position:absolute;inset:0;z-index:5;background:#f8d1df;clip-path:polygon(0 0,100% 0,50% 63%);transform-origin:top;transition:transform .8s}
+.env-heart{position:absolute;z-index:6;top:42%;left:50%;transform:translate(-50%,-50%);color:#d94d89;font-size:35px}
+.envelope.open .env-flap{transform:rotateX(180deg);z-index:1}
+.envelope.open .letter-paper{height:360px;transform:translateY(-300px);overflow-y:auto;z-index:7}
+.envelope.open .env-heart{opacity:0}
+.letter-buttons{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.petal{position:fixed;top:-30px;z-index:25;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translate(var(--dx),110vh) rotate(600deg);opacity:.1}}
+@media(max-width:380px){.actions .btn{padding:11px;font-size:12px}.envelope.open .letter-paper{height:330px;transform:translateY(-270px)}}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+
+<section class="screen active" id="bouquetScreen">
+  <div class="eyebrow">✦ A SPECIAL GIFT FOR YOU ✦</div>
+  <h1 class="title">Dear You 💗</h1>
+  <p class="sub">Một bó hoa nhỏ dành riêng cho người đặc biệt.</p>
+
+  <div class="gift" id="gift">
+    <!-- BÓ HOA VẼ TRỰC TIẾP, KHÔNG CẦN ẢNH NGOÀI -->
+    <svg class="bouquet-art" viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="wrap" x1="0" y1="0" x2="1" y2="1">
+          <stop stop-color="#fff9f1"/>
+          <stop offset=".48" stop-color="#f5d8dc"/>
+          <stop offset="1" stop-color="#fff8f0"/>
+        </linearGradient>
+        <linearGradient id="ribbon" x1="0" y1="0" x2="1" y2="1">
+          <stop stop-color="#ffe0e9"/>
+          <stop offset=".45" stop-color="#d97799"/>
+          <stop offset=".7" stop-color="#ffd5e3"/>
+          <stop offset="1" stop-color="#b95c7c"/>
+        </linearGradient>
+        <radialGradient id="rose">
+          <stop stop-color="#ffe3e6"/>
+          <stop offset=".55" stop-color="#f29bad"/>
+          <stop offset="1" stop-color="#b84966"/>
+        </radialGradient>
+        <g id="flower">
+          <g fill="#f9b9c9" stroke="#fff0ed" stroke-width="1">
+            <ellipse cy="-10" ry="12" rx="7"/>
+            <ellipse cy="-10" ry="12" rx="7" transform="rotate(45)"/>
+            <ellipse cy="-10" ry="12" rx="7" transform="rotate(90)"/>
+            <ellipse cy="-10" ry="12" rx="7" transform="rotate(135)"/>
+            <ellipse cy="-10" ry="12" rx="7" transform="rotate(180)"/>
+            <ellipse cy="-10" ry="12" rx="7" transform="rotate(225)"/>
+            <ellipse cy="-10" ry="12" rx="7" transform="rotate(270)"/>
+            <ellipse cy="-10" ry="12" rx="7" transform="rotate(315)"/>
+          </g>
+          <circle r="8" fill="url(#rose)"/>
+          <path d="M-4 0 Q0 -6 4 0 Q0 5 -4 0" fill="#b84966"/>
+        </g>
+        <g id="baby" fill="#fffaf2">
+          <path d="M0 30 Q-4 10 -18 -2 M0 30 Q4 10 18 -8 M0 30 Q0 12 2 -12 M0 18 L-18 10 M2 20 L20 8" fill="none" stroke="#72875c" stroke-width="1.3"/>
+          <g>
+            <circle cx="-18" cy="-2" r="4"/><circle cx="18" cy="-8" r="4"/>
+            <circle cx="2" cy="-12" r="4"/><circle cx="-18" cy="10" r="4"/>
+            <circle cx="20" cy="8" r="4"/><circle cx="-7" cy="12" r="3"/>
+            <circle cx="8" cy="2" r="3"/>
+          </g>
+        </g>
+      </defs>
+
+      <!-- Lá xanh phía sau -->
+      <g fill="#526c48" stroke="#7b9167" stroke-width="1.2">
+        <path d="M190 380 Q85 290 37 350 Q110 361 190 380"/>
+        <path d="M208 380 Q290 275 363 330 Q294 360 208 380"/>
+        <path d="M177 368 Q95 250 79 282 Q109 332 177 368"/>
+        <path d="M225 365 Q298 240 325 276 Q290 335 225 365"/>
+        <path d="M193 352 Q140 242 160 230 Q198 284 193 352"/>
+        <path d="M214 354 Q241 246 268 245 Q255 310 214 354"/>
+      </g>
+      <!-- Cành hoa -->
+      <g stroke="#87966c" stroke-width="2" fill="none">
+        <path d="M195 394 Q142 293 108 260"/>
+        <path d="M202 395 Q258 289 292 259"/>
+        <path d="M194 390 Q190 285 200 240"/>
+      </g>
+      <!-- Hoa baby -->
+      <use href="#baby" transform="translate(112 266) scale(1.3)"/>
+      <use href="#baby" transform="translate(288 263) scale(1.2)"/>
+      <use href="#baby" transform="translate(200 247) scale(1.25)"/>
+      <use href="#baby" transform="translate(150 315) scale(.8)"/>
+      <use href="#baby" transform="translate(252 314) scale(.9)"/>
+
+      <!-- Hoa hồng -->
+      <use href="#flower" transform="translate(101 365) scale(1.2)"/>
+      <use href="#flower" transform="translate(143 387) scale(1.3)"/>
+      <use href="#flower" transform="translate(264 382) scale(1.25)"/>
+      <use href="#flower" transform="translate(305 357) scale(1.1)"/>
+      <use href="#flower" transform="translate(181 399) scale(1.15)"/>
+      <use href="#flower" transform="translate(222 400) scale(1.2)"/>
+
+      <!-- Giấy gói xếp lớp phía sau -->
+      <path d="M68 350 Q102 376 164 397 L247 397 Q307 373 337 350 L296 476 L228 542 L175 493 L103 456 Z" fill="url(#wrap)" stroke="#eac4cf" stroke-width="2"/>
+      <path d="M68 350 Q95 420 174 474 L150 405 Z" fill="#fff5ef" stroke="#efd5d9"/>
+      <path d="M337 350 Q310 420 228 474 L252 405 Z" fill="#fff0f2" stroke="#efd5d9"/>
+      <path d="M100 390 Q148 437 198 469 L173 531 L134 473 Z" fill="#f4ccd8" stroke="#e8b7c9"/>
+      <path d="M304 390 Q260 437 202 469 L228 531 L272 473 Z" fill="#fff9f1" stroke="#e7c5d0"/>
+
+      <!-- Giấy gói phía trước -->
+      <path d="M45 348 Q100 369 164 393 L199 432 L157 474 Q95 444 61 400 Z" fill="url(#wrap)" stroke="#e7c7d0" stroke-width="2"/>
+      <path d="M355 348 Q302 369 237 393 L200 432 L244 474 Q306 444 339 400 Z" fill="url(#wrap)" stroke="#e7c7d0" stroke-width="2"/>
+      <path d="M45 348 Q82 395 157 474 L124 425 Z" fill="#fffaf3" opacity=".9"/>
+      <path d="M355 348 Q319 395 244 474 L276 425 Z" fill="#fffaf3" opacity=".9"/>
+
+      <!-- Cuống bó hoa -->
+      <path d="M157 420 Q175 463 171 520 L193 550 L211 520 Q210 466 243 420 Z" fill="url(#wrap)" stroke="#e6c1cf" stroke-width="2"/>
+      <path d="M174 464 L193 542 L202 463" fill="none" stroke="#fff" stroke-width="5" opacity=".8"/>
+
+      <!-- Nơ lụa lớn -->
+      <path d="M191 445 Q150 411 125 432 Q115 449 176 471 Q142 493 126 523 Q171 508 198 477 Z" fill="url(#ribbon)" stroke="#d789a5" stroke-width="2"/>
+      <path d="M205 445 Q250 410 274 432 Q285 450 222 471 Q255 493 275 522 Q229 508 199 477 Z" fill="url(#ribbon)" stroke="#d789a5" stroke-width="2"/>
+      <path d="M180 451 Q152 425 137 439 Q158 455 186 466 Z" fill="#ffe8ef" opacity=".8"/>
+      <path d="M218 451 Q247 425 263 439 Q239 455 212 466 Z" fill="#ffe8ef" opacity=".8"/>
+      <path d="M187 467 Q165 499 174 526 L196 487 L207 526 Q223 497 210 467 Z" fill="url(#ribbon)" stroke="#d789a5" stroke-width="2"/>
+      <ellipse cx="199" cy="461" rx="17" ry="13" fill="url(#ribbon)" stroke="#d789a5" stroke-width="1.5"/>
+      <path d="M194 453 Q200 461 194 468 M203 453 Q198 461 204 468" fill="none" stroke="#fff0f5" stroke-width="2"/>
+
+      <!-- Nếp gấp giấy -->
+      <g fill="none" stroke="#d6a9b9" stroke-width="1.5" opacity=".8">
+        <path d="M76 365 Q110 414 152 442"/>
+        <path d="M324 365 Q290 414 247 442"/>
+        <path d="M113 420 L168 482"/>
+        <path d="M285 420 L230 482"/>
+        <path d="M153 485 L178 520"/>
+        <path d="M246 485 L221 520"/>
+      </g>
+    </svg>
+
+    <div class="photo-slots" id="photoSlots"></div>
+  </div>
+
+  <p class="hint">✦ Chạm vào từng tấm ảnh để thay ảnh ✦</p>
+  <div class="upload-tools">
+    <label class="btn" for="bulkUpload">＋ Chọn ảnh</label>
+    <input id="bulkUpload" type="file" accept="image/*" multiple hidden>
+    <button class="btn dark" id="clearPhotos">Xóa ảnh</button>
+  </div>
+
+  <div class="actions">
+    <button class="btn" onclick="showScreen('editor')">← Chỉnh sửa</button>
+    <button class="btn primary" onclick="createCard()">Tạo thiệp →</button>
+  </div>
+</section>
+
+<section class="screen" id="editor">
+  <div class="eyebrow">MAKE IT PERSONAL</div>
+  <h1 class="title">Chỉnh sửa 💗</h1>
+  <div class="panel">
+    <label for="recipient">Tên người nhận</label>
+    <input id="recipient" value="Em yêu">
+    <label for="sender">Tên người gửi</label>
+    <input id="sender" value="Người thương">
+    <label for="wish">Lời chúc trên thiệp</label>
+    <textarea id="wish">Chúc em luôn vui vẻ và hạnh phúc.
+Cảm ơn em đã đến bên anh.
+Mong mọi điều dịu dàng nhất đến với em.
+Yêu em thật nhiều! 💗</textarea>
+    <label for="letterInput">Nội dung lá thư</label>
+    <textarea id="letterInput">Gửi em yêu!
+
+Cảm ơn em vì đã xuất hiện trong cuộc sống của anh. Cảm ơn em vì đã cùng anh đi qua những ngày vui buồn.
+
+Anh mong chúng ta sẽ luôn trân trọng nhau, cùng nhau tạo nên thật nhiều kỷ niệm đẹp.
+
+Chúc em luôn vui vẻ, bình an và hạnh phúc. Mong mọi điều dịu dàng nhất sẽ đến với em.
+
+Thương em thật nhiều! 💗</textarea>
+    <label for="signInput">Chữ ký cuối thư</label>
+    <input id="signInput" value="Người thương của em ♡">
+    <button class="btn primary" onclick="saveSettings()">Lưu thay đổi ♡</button>
+  </div>
+  <div class="actions">
+    <button class="btn" onclick="showScreen('bouquetScreen')">← Bó hoa</button>
+    <button class="btn primary" onclick="saveSettings();createCard()">Tạo thiệp →</button>
+  </div>
+</section>
+
+<section class="screen" id="cardScreen">
+  <button class="btn dark corner left" onclick="showScreen('bouquetScreen')">← Bó hoa</button>
+  <button class="btn dark corner right" onclick="toggleSound()" id="soundBtn">♫ Nhạc</button>
+  <div id="world"></div>
+  <div class="caption" id="caption"></div>
+  <div class="actions">
+    <button class="btn" onclick="showScreen('bouquetScreen')">Bó hoa</button>
+    <button class="btn primary" onclick="showScreen('letterScreen')">Đọc thư 💌</button>
+  </div>
+</section>
+
+<section class="screen" id="letterScreen">
+  <div class="letter-box">
+    <div class="letter-icon" style="font-size:45px">💌</div>
+    <div class="eyebrow">A LETTER FOR YOU</div>
+    <h1 class="title">Gửi người anh thương</h1>
+    <div class="envelope" id="envelope">
+      <div class="env-back"></div>
+      <div class="letter-paper">
+        <div class="letter-content">
+          <h2 id="letterHeading">Gửi em yêu ♡</h2>
+          <p id="letterText"></p>
+          <p id="letterSignature" style="text-align:right;font-style:italic"></p>
+        </div>
+      </div>
+      <div class="env-front"></div>
+      <div class="env-flap"></div>
+      <div class="env-heart">♥</div>
+    </div>
+    <p class="hint" id="letterHint">Chạm vào phong thư để mở nhé 💌</p>
+    <div class="letter-buttons">
+      <button class="btn" onclick="showScreen('cardScreen')">← Thiệp</button>
+      <button class="btn primary" onclick="toggleLetter()">Mở / Đóng thư</button>
+      <button class="btn" onclick="downloadLetter()">Tải thư ↓</button>
+    </div>
+  </div>
+</section>
+
+<script>
+/* SAO LẤP LÁNH */
+const canvas=document.getElementById('stars');
+const ctx=canvas.getContext('2d');
+let stars=[];
+function resize(){
+  const dpr=Math.min(devicePixelRatio||1,2);
+  canvas.width=innerWidth*dpr;
+  canvas.height=innerHeight*dpr;
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  stars=Array.from({length:130},()=>({
+    x:Math.random()*innerWidth,y:Math.random()*innerHeight,
+    r:Math.random()*1.5+.3,p:Math.random()*6
+  }));
+}
+function draw(){
+  ctx.clearRect(0,0,innerWidth,innerHeight);
+  stars.forEach(s=>{
+    s.p+=.025;
+    ctx.beginPath();
+    ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx.fillStyle=`rgba(255,235,205,${.2+Math.abs(Math.sin(s.p))*.8})`;
+    ctx.shadowBlur=10;
+    ctx.shadowColor='#ffe2a0';
+    ctx.fill();
+  });
+  requestAnimationFrame(draw);
+}
+addEventListener('resize',resize);resize();draw();
+
+/* 6 ẢNH */
+let photos=Array(6).fill('');
+const slots=document.getElementById('photoSlots');
+const positions=[
+  ['14%','19%','22%','13%','-8deg'],
+  ['37%','15%','25%','14%','0deg'],
+  ['65%','19%','21%','13%','8deg'],
+  ['14%','31%','22%','14%','-7deg'],
+  ['39%','31%','22%','14%','0deg'],
+  ['64%','31%','22%','14%','7deg']
+];
+function renderPhotos(){
+  slots.innerHTML='';
+  positions.forEach((p,i)=>{
+    const label=document.createElement('label');
+    label.className='photo-slot';
+    Object.assign(label.style,{
+      left:p[0],top:p[1],width:p[2],height:p[3],
+      transform:`rotate(${p[4]})`
+    });
+    if(photos[i]){
+      const img=document.createElement('img');
+      img.src=photos[i];img.alt='Ảnh kỷ niệm '+(i+1);
+      label.appendChild(img);
+    }else{
+      const empty=document.createElement('span');
+      empty.className='empty';empty.textContent='＋';
+      label.appendChild(empty);
+    }
+    const input=document.createElement('input');
+    input.type='file';input.accept='image/*';
+    input.setAttribute('aria-label','Thay ảnh '+(i+1));
+    input.onchange=()=>{
+      const file=input.files[0];
+      if(file&&file.type.startsWith('image/')){
+        if(photos[i])URL.revokeObjectURL(photos[i]);
+        photos[i]=URL.createObjectURL(file);
+        renderPhotos();
+      }
+    };
+    label.appendChild(input);slots.appendChild(label);
+  });
+}
+renderPhotos();
+
+document.getElementById('bulkUpload').onchange=e=>{
+  [...e.target.files].filter(f=>f.type.startsWith('image/*')||f.type.startsWith('image/'))
+  .slice(0,6).forEach((f,i)=>{
+    if(photos[i])URL.revokeObjectURL(photos[i]);
+    photos[i]=URL.createObjectURL(f);
+  });
+  renderPhotos();e.target.value='';
+};
+document.getElementById('clearPhotos').onclick=()=>{
+  photos.forEach(p=>{if(p)URL.revokeObjectURL(p)});
+  photos=Array(6).fill('');renderPhotos();
+};
+
+/* CÁNH HOA */
+function petal(){
+  const e=document.createElement('span');
+  e.className='petal';e.textContent=Math.random()>.5?'🌸':'✿';
+  e.style.left=Math.random()*100+'vw';
+  e.style.fontSize=(12+Math.random()*16)+'px';
+  e.style.animationDuration=(5+Math.random()*6)+'s';
+  e.style.setProperty('--dx',(Math.random()*160-80)+'px');
+  document.body.appendChild(e);
+  setTimeout(()=>e.remove(),12000);
+}
+setInterval(petal,900);
+document.getElementById('gift').addEventListener('click',()=>{
+  for(let i=0;i<12;i++)setTimeout(petal,i*70);
+});
+
+/* CHỈNH NỘI DUNG */
+let recipient='',sender='',message='',letterMessage='',signature='';
+function saveSettings(){
+  recipient=document.getElementById('recipient').value.trim()||'Em yêu';
+  sender=document.getElementById('sender').value.trim()||'Người thương';
+  message=document.getElementById('wish').value.trim();
+  letterMessage=document.getElementById('letterInput').value.trim();
+  signature=document.getElementById('signInput').value.trim()||sender;
+  document.getElementById('letterHeading').textContent='Gửi '+recipient+' ♡';
+  document.getElementById('letterText').textContent=letterMessage;
+  document.getElementById('letterSignature').textContent=signature;
+  document.getElementById('caption').textContent=`Gửi ${recipient} ♡ — ${sender}`;
+}
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(id==='letterScreen')saveSettings();
+  window.scrollTo(0,0);
+}
+
+/* THIỆP VŨ TRỤ 3D */
+function createCard(){
+  saveSettings();
+  const world=document.getElementById('world');
+  world.innerHTML='';
+  const phrases=[...message.split('\n').filter(Boolean),'I love you ❤️','Yêu em lắm 💗'];
+  for(let i=0;i<38;i++){
+    const el=document.createElement('div');
+    el.className='floating-text';
+    el.textContent=phrases[i%phrases.length];
+    el.style.left=Math.random()*95+'%';
+    el.style.top=Math.random()*95+'%';
+    el.style.animationDelay=-Math.random()*6+'s';
+    world.appendChild(el);
+  }
+  for(let i=0;i<18;i++){
+    const h=document.createElement('div');
+    h.className='heart';h.textContent='♥';
+    h.style.left=Math.random()*95+'%';
+    h.style.top=Math.random()*95+'%';
+    h.style.animationDelay=-Math.random()*4+'s';
+    world.appendChild(h);
+  }
+  const valid=photos.filter(Boolean);
+  if(valid.length){
+    const main=document.createElement('img');
+    main.className='photo-main';main.src=valid[0];world.appendChild(main);
+    valid.slice(1).forEach((src,i)=>{
+      const img=document.createElement('img');
+      img.className='photo-mini';img.src=src;
+      img.style.left=(4+(i%3)*32)+'%';
+      img.style.top=(12+Math.floor(i/3)*62)+'%';
+      world.appendChild(img);
+    });
+  }
+  showScreen('cardScreen');
+}
+
+/* THƯ TÌNH */
+function toggleLetter(){
+  const env=document.getElementById('envelope');
+  env.classList.toggle('open');
+  document.getElementById('letterHint').textContent=
+    env.classList.contains('open')?'Một chút yêu thương dành riêng cho bạn 💗':'Chạm vào phong thư để mở nhé 💌';
+}
+document.getElementById('envelope').addEventListener('click',toggleLetter);
+function downloadLetter(){
+  saveSettings();
+  const blob=new Blob(['\ufeff'+recipient+'\n\n'+letterMessage+'\n\n'+signature],{type:'text/plain;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='Thu-tinh-Dear-You.txt';a.click();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+
+/* ÂM THANH NỀN NHẸ */
+let audio=null,oscillators=[],playing=false;
+function toggleSound(){
+  if(playing){
+    oscillators.forEach(o=>{try{o.stop()}catch(e){}});
+    oscillators=[];playing=false;
+    document.getElementById('soundBtn').textContent='♫ Nhạc';
+    return;
+  }
+  try{
+    audio=new(window.AudioContext||window.webkitAudioContext)();
+    if(audio.state==='suspended')audio.resume();
+    [261.63,329.63,392].forEach(freq=>{
+      const o=audio.createOscillator(),g=audio.createGain();
+      o.type='sine';o.frequency.value=freq;g.gain.value=.008;
+      o.connect(g);g.connect(audio.destination);o.start();
+      oscillators.push(o);
+    });
+    playing=true;document.getElementById('soundBtn').textContent='♫ Tắt nhạc';
+  }catch(e){}
+}
+saveSettings();
+</script>
+</body>
+</html>
